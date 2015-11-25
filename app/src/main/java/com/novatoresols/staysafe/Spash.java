@@ -27,7 +27,7 @@ import DB.TinyDB;
 public class Spash extends AppCompatActivity {
 
     final String PREFS_NAME = "MyPrefsFile";
-    private static int SPLASH_TIME_OUT = 3000;
+    private static int SPLASH_TIME_OUT = 1500;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

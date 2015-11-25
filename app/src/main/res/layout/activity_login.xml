@@ -42,7 +42,7 @@
             android:layout_centerHorizontal="false"
             android:layout_centerVertical="true"
 
-            android:src="@drawable/ic_p" />
+            android:src="@drawable/personlogin" />
 
         <EditText
             android:id="@+id/edtUser"
@@ -52,7 +52,7 @@
             android:layout_marginRight="10dp"
             android:layout_toRightOf="@+id/imgUser"
             android:ems="10"
-            android:enabled="false"
+
 
             android:inputType="text"
             android:text="User Name"
@@ -79,7 +79,7 @@
             android:layout_centerHorizontal="false"
             android:layout_centerVertical="true"
 
-            android:src="@drawable/ic_password" />
+            android:src="@drawable/passwordlogin" />
 
         <EditText
             android:id="@+id/edtEmail"
@@ -88,10 +88,7 @@
             android:layout_marginLeft="1dp"
             android:layout_marginRight="10dp"
             android:layout_toRightOf="@+id/imgpass"
-
             android:ems="10"
-
-            android:enabled="false"
             android:inputType="textEmailAddress"
             android:text="Password"
             android:textColor="@color/textcolor"
@@ -129,13 +126,13 @@
 
     <ImageView
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="140sp"
         android:id="@+id/imageView2"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:src="@drawable/ic_logo"
-        android:paddingRight="10sp"
-        android:layout_marginTop="45dp" />
+        android:src="@drawable/logo"
+        android:paddingRight="3sp"
+        android:layout_marginTop="1dp" />
 
     <TextView
         android:layout_width="wrap_content"

@@ -27,6 +27,8 @@
 
 
 
+
+
         <fragment
             android:id="@+id/mapp"
             android:name="com.google.android.gms.maps.MapFragment"
@@ -150,6 +152,7 @@
         </LinearLayout>
 
 
+
         <fragment
             android:id="@+id/map"
             android:name="com.google.android.gms.maps.MapFragment"
@@ -164,7 +167,31 @@
         android:layout_below="@+id/inputLocation"
         android:background="@color/colorSkyBlue"
         android:layout_height="50sp" />
+
 -->
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:orientation="horizontal"
+        android:id="@+id/contentheader"
+        android:visibility="invisible"
+        android:layout_alignParentBottom="true"
+        android:layout_height="70sp">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:textColor="@android:color/white"
+            android:text="Hekko"
+            android:paddingLeft="8sp"
+            android:background="@color/green"
+            android:id="@+id/one"
+            android:layout_alignParentLeft="true"
+            android:layout_height="wrap_content" />
+
+    </RelativeLayout>
+
+
+
 
 
 </RelativeLayout>

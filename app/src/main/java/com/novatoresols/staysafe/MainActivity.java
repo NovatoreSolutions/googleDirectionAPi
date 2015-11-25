@@ -1,5 +1,6 @@
 package com.novatoresols.staysafe;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Color;
@@ -27,6 +28,8 @@ import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Filterable;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
@@ -101,6 +104,7 @@ public class MainActivity extends AppCompatActivity
     GoogleMap googleMap;
     GoogleMap googleMap2;
     final String TAG = "PathGoogleMapActivity";
+    String data = "";
 
     //AutoComplete
     private static final String LOG_TAG = "Google Places Autocomplete";
@@ -112,9 +116,19 @@ public class MainActivity extends AppCompatActivity
     AutoCompleteTextView end;
     LatLng EndLatLng = null;
 
+    SharedPreferences getList;
+    List<LatLng> aList;
+    List<RouteModel> routeList;
+
     public GoogleApiClient mGoogleApiClient;
     public Location mLastLocation;
     LocationRequest mLocationRequest;
+
+    TextView one;
+    TextView two;
+    TextView three;
+
+    ProgressDialog pd;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -128,6 +142,10 @@ public class MainActivity extends AppCompatActivity
                 .addOnConnectionFailedListener(this)
                 .addApi(LocationServices.API)
                 .build();
+
+        one=(TextView)findViewById(R.id.one);
+        //two=(TextView)findViewById(R.id.two);
+        //three=(TextView)findViewById(R.id.three);
 
 
         //AutotextView
@@ -165,11 +183,10 @@ public class MainActivity extends AppCompatActivity
                 CameraUpdateFactory.newCameraPosition(myPosition));*/
 
 
-        googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(SANS_FRASISCO, 13));
+        googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(SANS_FRASISCO,15));
 
         //Reading The List
-        SharedPreferences getList;
-        List<LatLng> aList;
+
         getList = getSharedPreferences("a", Context.MODE_PRIVATE);
         String jsonFavorite = getList.getString("alist", null);
         Gson gso = new Gson();
@@ -177,10 +194,12 @@ public class MainActivity extends AppCompatActivity
         aList = Arrays.asList(favoriteItems);
         aList = new ArrayList(aList);
 
-        for (int i = 0; i < 15; i++) {
+        for (int i = 0; i < 45; i++) {
             googleMap.addMarker(new MarkerOptions().position(aList.get(i))
-                    .title("Accident"));
+                    .title("Fatal Accident")
+                    .icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_accidentmarker)));
         }
+
 
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -206,7 +225,7 @@ public class MainActivity extends AppCompatActivity
             e.printStackTrace();
         }
         googleMap2.setMyLocationEnabled(true);
-        googleMap2.moveCamera(CameraUpdateFactory.newLatLngZoom(SANS_FRASISCO, 13));
+        googleMap2.moveCamera(CameraUpdateFactory.newLatLngZoom(SANS_FRASISCO, 12));
 
 
     }
@@ -226,6 +245,8 @@ public class MainActivity extends AppCompatActivity
 
             LinearLayout l = (LinearLayout) findViewById(R.id.gettingStarted);
             l.setVisibility(View.VISIBLE);
+            RelativeLayout contentheader=(RelativeLayout)findViewById(R.id.contentheader);
+            contentheader.setVisibility(View.VISIBLE);
 
             String startingPoint = start.getText().toString();
             String endingPoint = end.getText().toString();
@@ -247,11 +268,14 @@ public class MainActivity extends AppCompatActivity
             } catch (Exception e) {
                 e.printStackTrace();
             }
-            googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(StartLatLng, 13));
+            googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(StartLatLng, 12));
             addMarkers(StartLatLng, EndLatLng);
+            pd = ProgressDialog.show(MainActivity.this, "Loading Data...", "Please Wait", true, false, null);
             String url = getMapsApiDirectionsUrl(StartLatLng, EndLatLng);
             ReadTask downloadTask = new ReadTask();
             downloadTask.execute(url);
+
+
         }
 
 
@@ -416,6 +440,7 @@ public class MainActivity extends AppCompatActivity
             try {
                 HttpConnection http = new HttpConnection();
                 data = http.readUrl(url[0]);
+
             } catch (Exception e) {
                 Log.d("Background Task", e.toString());
             }
@@ -441,7 +466,9 @@ public class MainActivity extends AppCompatActivity
             try {
                 jObject = new JSONObject(jsonData[0]);
                 PathJSONParser parser = new PathJSONParser();
+                routeList=RouteModelParder.parseRouteRecords(jObject);
                 routes = parser.parse(jObject);
+
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -453,11 +480,28 @@ public class MainActivity extends AppCompatActivity
             ArrayList<LatLng> points = null;
             PolylineOptions polyLineOptions = null;
 
+            pd.dismiss();
+            String ones="Fast Route Via  "+ routeList.get(0).getViaRoute() + "\n" + "Distance            " + routeList.get(0).getDistance() + "\n" + "Time                   "+ routeList.get(0).getTime();
+
+
+            one.setText(ones);
+           // two.setText(twos);
+            //three.setText(threes);
+
+            Boolean reline=false;
+            Boolean yelloline=false;
+            Boolean geenline=false;
+            //int redcount
+
+
+
+
             // traversing through routes
             for (int i = 0; i < routes.size(); i++) {
                 points = new ArrayList<LatLng>();
                 polyLineOptions = new PolylineOptions();
                 List<HashMap<String, String>> path = routes.get(i);
+
 
                 for (int j = 0; j < path.size(); j++) {
                     HashMap<String, String> point = path.get(j);
@@ -465,15 +509,30 @@ public class MainActivity extends AppCompatActivity
                     double lat = Double.parseDouble(point.get("lat"));
                     double lng = Double.parseDouble(point.get("lng"));
                     LatLng position = new LatLng(lat, lng);
-
                     points.add(position);
-                }
 
-                polyLineOptions.addAll(points);
-                polyLineOptions.width(5);
-                polyLineOptions.color(Color.BLUE);
-                googleMap.addPolyline(polyLineOptions);
+                    if (aList.contains(position)){
+                        reline=true;
+                    }
+
+
+                }
+                if (reline==true) {
+                    polyLineOptions.addAll(points);
+                    polyLineOptions.width(15);
+                    polyLineOptions.color(Color.RED);
+                    googleMap.addPolyline(polyLineOptions);
+                    reline=false;
+                }
+                else {
+                    polyLineOptions.addAll(points);
+                    polyLineOptions.width(15);
+                    polyLineOptions.color(Color.GREEN);
+                    googleMap.addPolyline(polyLineOptions);
+                }
             }
+
+
 
             //googleMap.addPolyline(polyLineOptions);
         }
@@ -648,13 +707,6 @@ public class MainActivity extends AppCompatActivity
 
         return String.valueOf(s1);
     }
-
-
-
-
-
-
-
     @Override
     public void onConnected(Bundle bundle) {
 
@@ -667,21 +719,14 @@ public class MainActivity extends AppCompatActivity
         start.setText(s);
         end.requestFocus();
     }
-
-
-
-
-
     @Override
     public void onConnectionSuspended(int i) {
 
     }
-
     @Override
     public void onConnectionFailed(ConnectionResult connectionResult) {
 
     }
-
     protected synchronized void buildGoogleApiClient() {
         mGoogleApiClient = new GoogleApiClient.Builder(this)
                 .addConnectionCallbacks(this)

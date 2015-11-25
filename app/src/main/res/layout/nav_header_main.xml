@@ -23,6 +23,9 @@
         android:src="@drawable/sampleperson"
         android:id="@+id/cimageView" />
 
-
-
+    <View
+        android:background="#ffffffff"
+        android:layout_width="fill_parent"
+        android:layout_gravity="bottom"
+        android:layout_height="1.0dip" />
 </LinearLayout>
