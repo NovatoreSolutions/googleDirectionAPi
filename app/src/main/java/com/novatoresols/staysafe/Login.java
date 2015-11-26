@@ -8,6 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class Login extends AppCompatActivity {
 
@@ -38,6 +39,16 @@ public class Login extends AppCompatActivity {
         Intent i=new Intent(Login.this,MainActivity.class);
         startActivity(i);
         finish();
+    }
+
+    public void forgotMethod(View v) {
+        Toast.makeText(this,"Comming Soon",Toast.LENGTH_SHORT).show();
+
+    }
+
+    public void createAccount(View v) {
+        Toast.makeText(this,"Comming Soon",Toast.LENGTH_SHORT).show();
+
     }
     private boolean isNetworkAvailable() {
         ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);

@@ -2,6 +2,7 @@ package com.novatoresols.staysafe;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.location.Address;
@@ -26,6 +27,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
+import android.widget.Button;
 import android.widget.Filterable;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -62,6 +64,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Random;
 import java.util.logging.Filter;
 import java.util.logging.LogRecord;
 import java.io.IOException;
@@ -127,8 +130,11 @@ public class MainActivity extends AppCompatActivity
     TextView one;
     TextView two;
     TextView three;
-
     ProgressDialog pd;
+
+    LatLng c1=new LatLng(31.4355209,74.2739632);
+    LatLng c2=new LatLng(31.4554714, 74.3007571);
+    LatLng c3=new LatLng(31.437695, 31.437695);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -240,13 +246,41 @@ public class MainActivity extends AppCompatActivity
         } else {
 
             hidekeyboared();
+
+            googleMap.clear();
+
+            //Reading The List
+            getList = getSharedPreferences("a", Context.MODE_PRIVATE);
+            String jsonFavorite = getList.getString("alist", null);
+            Gson gso = new Gson();
+            LatLng[] favoriteItems = gso.fromJson(jsonFavorite, LatLng[].class);
+            aList = Arrays.asList(favoriteItems);
+            aList = new ArrayList(aList);
+
+            for (int i = 0; i < 45; i++) {
+                googleMap.addMarker(new MarkerOptions().position(aList.get(i))
+                        .title("Fatal Accident")
+                        .icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_accidentmarker)));
+            }
+
             LinearLayout ll = (LinearLayout) findViewById(R.id.inputLocation);
             ll.setVisibility(View.INVISIBLE);
 
             LinearLayout l = (LinearLayout) findViewById(R.id.gettingStarted);
             l.setVisibility(View.VISIBLE);
+
+
+            Button accidentshow=(Button)findViewById(R.id.accidentshow);
+            String[] array = getResources().getStringArray(R.array.accidentarray);
+            String randomStr = array[new Random().nextInt(array.length)];
+            accidentshow.setText("Last Fatal Accident In"+" "+randomStr);
+            accidentshow.setVisibility(View.VISIBLE);
+
+
             RelativeLayout contentheader=(RelativeLayout)findViewById(R.id.contentheader);
             contentheader.setVisibility(View.VISIBLE);
+
+            pd = ProgressDialog.show(MainActivity.this, "Loading Data...", "Please Wait", true, false, null);
 
             String startingPoint = start.getText().toString();
             String endingPoint = end.getText().toString();
@@ -270,7 +304,7 @@ public class MainActivity extends AppCompatActivity
             }
             googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(StartLatLng, 12));
             addMarkers(StartLatLng, EndLatLng);
-            pd = ProgressDialog.show(MainActivity.this, "Loading Data...", "Please Wait", true, false, null);
+
             String url = getMapsApiDirectionsUrl(StartLatLng, EndLatLng);
             ReadTask downloadTask = new ReadTask();
             downloadTask.execute(url);
@@ -302,6 +336,26 @@ public class MainActivity extends AppCompatActivity
 
     public void viaCar(View v) {
         Toast.makeText(MainActivity.this, "Route Via Car Selected", Toast.LENGTH_SHORT).show();
+    }
+
+    public void shareRoute(View v) {
+
+        String subject="Fastest Route " + "  From" + start.getText().toString() + "  T0" + end.getText().toString();
+        String ones="Fast Route Via  "+ routeList.get(0).getViaRoute() + "\n" + "Distance            " + routeList.get(0).getDistance() + "\n" + "Time                   "+ routeList.get(0).getTime();
+
+        try
+        { Intent i = new Intent(Intent.ACTION_SEND);
+            i.setType("text/plain");
+            i.putExtra(Intent.EXTRA_SUBJECT,subject);
+            i.putExtra(Intent.EXTRA_TEXT, ones);
+            startActivity(Intent.createChooser(i, "choose one"));
+        }
+        catch(Exception e)
+        { //e.toString();
+        }
+
+
+
     }
 
     private void initilizeMap() {
@@ -492,6 +546,7 @@ public class MainActivity extends AppCompatActivity
             Boolean yelloline=false;
             Boolean geenline=false;
             //int redcount
+            LatLng t;
 
 
 
@@ -510,23 +565,25 @@ public class MainActivity extends AppCompatActivity
                     double lng = Double.parseDouble(point.get("lng"));
                     LatLng position = new LatLng(lat, lng);
                     points.add(position);
-
+                   // t=position;
                     if (aList.contains(position)){
                         reline=true;
                     }
 
 
+
+
                 }
                 if (reline==true) {
                     polyLineOptions.addAll(points);
-                    polyLineOptions.width(15);
+                    polyLineOptions.width(16);
                     polyLineOptions.color(Color.RED);
                     googleMap.addPolyline(polyLineOptions);
                     reline=false;
                 }
                 else {
                     polyLineOptions.addAll(points);
-                    polyLineOptions.width(15);
+                    polyLineOptions.width(16);
                     polyLineOptions.color(Color.GREEN);
                     googleMap.addPolyline(polyLineOptions);
                 }
