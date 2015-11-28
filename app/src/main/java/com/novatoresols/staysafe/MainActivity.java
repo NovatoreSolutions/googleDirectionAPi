@@ -601,7 +601,6 @@ public class MainActivity extends AppCompatActivity
             }
 
 
-
             //googleMap.addPolyline(polyLineOptions);
         }
     }
@@ -626,7 +625,7 @@ public class MainActivity extends AppCompatActivity
 
             StringBuilder sb = new StringBuilder(PLACES_API_BASE + TYPE_AUTOCOMPLETE + OUT_JSON);
             sb.append("?key=" + API_KEY);
-            sb.append("&components=country:pk");
+            sb.append("&components=country:us");
             sb.append("&input=" + URLEncoder.encode(input, "utf8"));
             URL url = new URL(sb.toString());
             conn = (HttpURLConnection) url.openConnection();
