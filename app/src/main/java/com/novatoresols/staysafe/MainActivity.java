@@ -257,7 +257,7 @@ public class MainActivity extends AppCompatActivity
             aList = Arrays.asList(favoriteItems);
             aList = new ArrayList(aList);
 
-            for (int i = 0; i < 45; i++) {
+            for (int i = 0; i < 30; i++) {
                 googleMap.addMarker(new MarkerOptions().position(aList.get(i))
                         .title("Fatal Accident")
                         .icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_accidentmarker)));
@@ -309,9 +309,7 @@ public class MainActivity extends AppCompatActivity
             ReadTask downloadTask = new ReadTask();
             downloadTask.execute(url);
 
-
         }
-
 
     }
 
@@ -545,6 +543,9 @@ public class MainActivity extends AppCompatActivity
             Boolean geenline=false;
             //int redcount
             LatLng t;
+            int check=0;
+            int yell=0;
+            boolean c=false;
 
 
 
@@ -568,23 +569,35 @@ public class MainActivity extends AppCompatActivity
                         reline=true;
                     }
 
-
+                    yell=yell+1;
 
 
                 }
-                if (reline==true) {
+                if (reline==true || check==0) {
                     polyLineOptions.addAll(points);
                     polyLineOptions.width(16);
                     polyLineOptions.color(Color.RED);
                     googleMap.addPolyline(polyLineOptions);
                     reline=false;
+                    check=check+1;
+
                 }
-                else {
+                if (i==2){
+                    polyLineOptions.addAll(points);
+                    polyLineOptions.width(16);
+                    polyLineOptions.color(Color.YELLOW);
+                    googleMap.addPolyline(polyLineOptions);
+                   // c=false;
+
+                }
+                if (i==1){
                     polyLineOptions.addAll(points);
                     polyLineOptions.width(16);
                     polyLineOptions.color(Color.GREEN);
                     googleMap.addPolyline(polyLineOptions);
+
                 }
+
             }
 
 
@@ -613,7 +626,7 @@ public class MainActivity extends AppCompatActivity
 
             StringBuilder sb = new StringBuilder(PLACES_API_BASE + TYPE_AUTOCOMPLETE + OUT_JSON);
             sb.append("?key=" + API_KEY);
-            sb.append("&components=country:us");
+            sb.append("&components=country:pk");
             sb.append("&input=" + URLEncoder.encode(input, "utf8"));
             URL url = new URL(sb.toString());
             conn = (HttpURLConnection) url.openConnection();

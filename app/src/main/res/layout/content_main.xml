@@ -186,7 +186,7 @@
         android:orientation="horizontal"
         android:id="@+id/contentheader"
         android:visibility="invisible"
-        android:background="@color/green"
+        android:background="@color/red"
         android:layout_alignParentBottom="true"
         android:layout_height="70sp">
 
