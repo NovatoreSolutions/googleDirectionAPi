@@ -14,4 +14,24 @@
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
+    <style name="PinBtnStyle">
+        <item name="android:textAppearance">?android:attr/textAppearanceMediumInverse</item>
+        <item name="android:textSize">35sp</item>
+        <item name="android:shadowDx">0</item>
+        <item name="android:shadowDy">0</item>
+        <item name="android:shadowRadius">2</item>
+    </style>
+
+    <style name="msgStyle" parent="PinBtnStyle">
+        <item name="android:shadowColor">@color/colorPrimaryDark</item>
+        <item name="android:textColor">@color/blk</item>
+        <item name="android:textSize">35sp</item>
+    </style>
+
+    <style name="msgStyleYes" parent="PinBtnStyle">
+        <item name="android:shadowColor">@color/col_shadow</item>
+        <item name="android:textColor">@color/col_green</item>
+        <item name="android:textSize">35sp</item>
+    </style>
+
 </resources>

@@ -17,5 +17,12 @@
     <color name="blue">#0000FF</color>
     <color name="violet">#7F00FF</color>
     <color name="magenta">#FF00FF</color>
+    <color name="col_menu_border">#5C4A1D</color>
+    <color name="col_green">#00FF00</color>
+    <color name="col_red">#FF0000</color>
+    <color name="dlgBckg">#F8FFFFFF</color>
+    <color name="col_shadow">#00FF00</color>
+    <color name="col_blue">#6699FF</color>
+    <color name="blk">#000</color>
 
 </resources>

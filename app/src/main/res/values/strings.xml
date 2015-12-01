@@ -6,6 +6,10 @@
 
     <string name="action_settings">Settings</string>
 
+    <string name="dlg_delete">Are you sure?</string>
+    <string name="dlg_bkg">Background</string>
+    <string name="msgYes">OK</string>
+
     <string-array name="accidentarray">
         <item>2011</item>
         <item>2010</item>

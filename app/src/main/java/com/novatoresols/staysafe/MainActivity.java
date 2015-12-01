@@ -14,6 +14,8 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.util.Log;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -30,6 +32,7 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.Filterable;
 import android.widget.LinearLayout;
+import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -49,6 +52,7 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.maps.model.PolylineOptions;
 import com.google.gson.Gson;
+import com.google.maps.android.PolyUtil;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -529,11 +533,12 @@ public class MainActivity extends AppCompatActivity
         protected void onPostExecute(List<List<HashMap<String, String>>> routes) {
             ArrayList<LatLng> points = null;
             PolylineOptions polyLineOptions = null;
+            final List<PolylineOptions> polyarr=new ArrayList();
+
 
             pd.dismiss();
+
             String ones="Fast Route Via  "+ routeList.get(0).getViaRoute() + "\n" + "Distance            " + routeList.get(0).getDistance() + "\n" + "Time                   "+ routeList.get(0).getTime();
-
-
             one.setText(ones);
            // two.setText(twos);
             //three.setText(threes);
@@ -573,8 +578,12 @@ public class MainActivity extends AppCompatActivity
 
 
                 }
+
+                polyLineOptions.addAll(points);
+                polyarr.add(polyLineOptions);
+
                 if (reline==true || check==0) {
-                    polyLineOptions.addAll(points);
+                    //polyLineOptions.addAll(points);
                     polyLineOptions.width(16);
                     polyLineOptions.color(Color.RED);
                     googleMap.addPolyline(polyLineOptions);
@@ -583,7 +592,7 @@ public class MainActivity extends AppCompatActivity
 
                 }
                 if (i==2){
-                    polyLineOptions.addAll(points);
+                  //  polyLineOptions.addAll(points);
                     polyLineOptions.width(16);
                     polyLineOptions.color(Color.YELLOW);
                     googleMap.addPolyline(polyLineOptions);
@@ -591,7 +600,7 @@ public class MainActivity extends AppCompatActivity
 
                 }
                 if (i==1){
-                    polyLineOptions.addAll(points);
+                    //polyLineOptions.addAll(points);
                     polyLineOptions.width(16);
                     polyLineOptions.color(Color.GREEN);
                     googleMap.addPolyline(polyLineOptions);
@@ -599,6 +608,55 @@ public class MainActivity extends AppCompatActivity
                 }
 
             }
+
+
+            googleMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
+                @Override
+                public void onMapClick(LatLng clickCoords) {
+                    for (int i=0; i<polyarr.size();i++) {
+                       PolylineOptions polyline=polyarr.get(i);
+                        if (PolyUtil.isLocationOnPath(clickCoords, polyline.getPoints(), true, 100)) {
+                            // user clicked on polyline
+                            RouteModel rm=routeList.get(i);
+                            Log.i("Map click", rm.getDistance());
+
+                            LayoutInflater inf = (LayoutInflater)getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                            View v = inf.inflate(R.layout.pop_hint, null, false);
+
+                            final PopupWindow pw = new PopupWindow(v);
+                            pw.setWidth(RelativeLayout.LayoutParams.WRAP_CONTENT);
+                            pw.setHeight(RelativeLayout.LayoutParams.WRAP_CONTENT);
+
+                            TextView dlgTxt = (TextView) v.findViewById(R.id.dlgMsg);
+                            //dlgTxt.setText("Character is Profession by lawyer");
+
+                                dlgTxt.setText("Route  "+ rm.getViaRoute() + "\n" + "Distance            " + rm.getDistance() + "\n" + "Time                   "+ rm.getTime());
+
+                            TextView yesTxt = (TextView) v.findViewById(R.id.dlgYes);
+
+                            yesTxt.setOnClickListener(new View.OnClickListener() {
+
+                                @Override
+                                public void onClick(View v) {
+                                    pw.dismiss();
+
+                                }
+                            });
+
+                            pw.showAtLocation(v, Gravity.CENTER, 0, 0);
+
+
+
+
+
+
+                        }
+                    }
+                }
+            });
+
+
+
 
 
             //googleMap.addPolyline(polyLineOptions);
@@ -801,8 +859,6 @@ public class MainActivity extends AppCompatActivity
                 .addApi(LocationServices.API)
                 .build();
     }
-
-
     @Override
     protected void onPause() {
         super.onPause();
@@ -810,23 +866,18 @@ public class MainActivity extends AppCompatActivity
             mGoogleApiClient.disconnect();
         }
     }
-
-
     @Override
     public void onLocationChanged(Location location) {
 
     }
-
     @Override
     public void onStatusChanged(String provider, int status, Bundle extras) {
 
     }
-
     @Override
     public void onProviderEnabled(String provider) {
 
     }
-
     @Override
     public void onProviderDisabled(String provider) {
 

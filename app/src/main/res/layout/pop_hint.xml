@@ -1,0 +1,35 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="@drawable/dlg_gradient">
+
+    <TextView
+        android:id="@+id/dlgMsg"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/dlg_delete"
+
+        android:layout_centerHorizontal="true"
+        android:layout_margin="15dp"
+        style="@style/msgStyle"
+
+        android:textSize="25sp" />
+
+    <LinearLayout android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/dlgMsg">
+
+        <TextView
+            android:id="@+id/dlgYes"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/msgYes"
+            style="@style/msgStyleYes"
+            android:textSize="30dp" />
+
+
+    </LinearLayout>
+
+</RelativeLayout>
