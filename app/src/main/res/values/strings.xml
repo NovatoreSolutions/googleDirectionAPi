@@ -17,4 +17,11 @@
         <item>2008</item>
         <item>2007</item>
     </string-array>
+
+    <string-array name="colors">
+        <item>#5BD1F1</item>
+        <item>#7F00FF</item>
+        <item>#007FFF</item>
+    </string-array>
+
 </resources>

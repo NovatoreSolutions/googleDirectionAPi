@@ -140,6 +140,10 @@ public class MainActivity extends AppCompatActivity
     LatLng c2=new LatLng(31.4554714, 74.3007571);
     LatLng c3=new LatLng(31.437695, 31.437695);
 
+
+   // public String[] allColors = getResources().getStringArray(R.array.colors);
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -223,6 +227,16 @@ public class MainActivity extends AppCompatActivity
     }
 
     public void gettingStarted(View v) {
+
+        /*if (start.getText().toString()==null) {
+             String s = getAddress(mLastLocation);
+             start.setText(s);
+             end.requestFocus();
+
+        }*/
+
+
+
         LinearLayout ll = (LinearLayout) findViewById(R.id.inputLocation);
         ll.setVisibility(View.VISIBLE);
         LinearLayout l = (LinearLayout) findViewById(R.id.gettingStarted);
@@ -538,7 +552,7 @@ public class MainActivity extends AppCompatActivity
 
             pd.dismiss();
 
-            String ones="Fast Route Via  "+ routeList.get(0).getViaRoute() + "\n" + "Distance            " + routeList.get(0).getDistance() + "\n" + "Time                   "+ routeList.get(0).getTime();
+            String ones="Route Via  "+ routeList.get(0).getViaRoute() + "\n" + "Distance            " + routeList.get(0).getDistance() + "\n" + "Time                   "+ routeList.get(0).getTime();
             one.setText(ones);
            // two.setText(twos);
             //three.setText(threes);
@@ -618,7 +632,7 @@ public class MainActivity extends AppCompatActivity
                         if (PolyUtil.isLocationOnPath(clickCoords, polyline.getPoints(), true, 100)) {
                             // user clicked on polyline
                             RouteModel rm=routeList.get(i);
-                            Log.i("Map click", rm.getDistance());
+                           /* Log.i("Map click", rm.getDistance());
 
                             LayoutInflater inf = (LayoutInflater)getSystemService(Context.LAYOUT_INFLATER_SERVICE);
                             View v = inf.inflate(R.layout.pop_hint, null, false);
@@ -643,9 +657,16 @@ public class MainActivity extends AppCompatActivity
                                 }
                             });
 
-                            pw.showAtLocation(v, Gravity.CENTER, 0, 0);
+                            pw.showAtLocation(v, Gravity.CENTER, 0, 0);*/
 
+                            String[] array = getResources().getStringArray(R.array.colors);
+                            String randomStr = array[new Random().nextInt(array.length)];
 
+                            RelativeLayout rl=(RelativeLayout)findViewById(R.id.contentheader);
+                            rl.setBackgroundColor(Color.parseColor(randomStr));
+
+                            String ones="Route Via  "+ rm.getViaRoute() + "\n" + "Distance            " + rm.getDistance() + "\n" + "Time                   "+ rm.getTime();
+                            one.setText(ones);
 
 
 
