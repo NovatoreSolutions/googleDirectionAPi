@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorPrimary"
+    tools:context="com.novatoresols.staysafe.Signup">
+
+
+
+
+
+    <RelativeLayout
+        android:id="@+id/layout_user"
+        android:layout_width="350sp"
+        android:layout_height="50dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="120sp"
+        android:background="@drawable/corner_view_normal" >
+
+        <ImageView
+            android:id="@+id/imgUser"
+            android:layout_width="50sp"
+            android:layout_height="50sp"
+            android:layout_centerHorizontal="false"
+            android:layout_centerVertical="true"
+
+            android:src="@drawable/personlogin" />
+
+        <EditText
+            android:id="@+id/edtUser"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="1dp"
+            android:layout_marginRight="10dp"
+            android:layout_toRightOf="@+id/imgUser"
+            android:ems="10"
+
+
+            android:inputType="text"
+            android:hint="User Name"
+
+            android:textSize="20sp" >
+            <requestFocus android:layout_width="wrap_content" />
+
+        </EditText>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/layout_pass"
+        android:layout_width="350dp"
+        android:layout_height="50dp"
+        android:layout_below="@+id/layout_user"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/corner_view_normal" >
+
+        <ImageView
+            android:id="@+id/imgpass"
+            android:layout_width="50sp"
+            android:layout_height="50sp"
+            android:layout_centerHorizontal="false"
+            android:layout_centerVertical="true"
+
+            android:src="@drawable/passwordlogin" />
+
+        <EditText
+            android:id="@+id/edtEmail"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="1dp"
+            android:layout_marginRight="10dp"
+            android:layout_toRightOf="@+id/imgpass"
+            android:ems="10"
+            android:inputType="textEmailAddress"
+            android:hint="Password"
+            android:textColor="@color/textcolor"
+            android:textSize="20sp" >
+
+        </EditText>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/layout_Email"
+        android:layout_width="350dp"
+        android:layout_height="50dp"
+        android:layout_below="@+id/layout_pass"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/corner_view_normal" >
+
+        <ImageView
+            android:id="@+id/imgemail"
+            android:layout_width="25sp"
+            android:layout_height="40sp"
+            android:layout_marginLeft="10sp"
+            android:layout_centerHorizontal="false"
+            android:layout_centerVertical="true"
+            android:src="@drawable/exhibitoremail" />
+
+        <EditText
+            android:id="@+id/edtemail"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="10sp"
+            android:layout_marginRight="10dp"
+            android:layout_toRightOf="@+id/imgemail"
+            android:ems="10"
+            android:inputType="textEmailAddress"
+            android:hint="Email"
+            android:textColor="@color/textcolor"
+            android:textSize="20sp" >
+
+        </EditText>
+    </RelativeLayout>
+
+
+    <Button
+        android:layout_width="350sp"
+        android:layout_height="50sp"
+        android:layout_below="@+id/layout_Email"
+        android:background="@color/colorSkyBlue"
+        android:text="SIGNUP"
+        android:onClick="createAccount"
+        android:textStyle="bold"
+        android:layout_centerHorizontal="true"
+        android:textColor="@color/colorPrimary"
+        android:paddingLeft="20sp"
+        android:paddingRight="20sp"
+        android:layout_marginTop="30sp"
+         />
+
+
+
+</RelativeLayout>

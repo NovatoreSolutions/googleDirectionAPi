@@ -447,13 +447,36 @@ public class MainActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_camara) {
+        if (id == R.id.nav_profile) {
             // Handle the camera action
-        } else if (id == R.id.nav_gallery) {
 
-        } else if (id == R.id.nav_slideshow) {
+            Intent i=new Intent(this,Profile.class);
+            startActivity(i);
 
-        } else if (id == R.id.nav_manage) {
+
+        } else if (id == R.id.nav_friends) {
+
+        } else if (id == R.id.nav_history) {
+
+        } else if (id == R.id.nav_setting) {
+
+            Intent i=new Intent(this,Setting.class);
+            startActivity(i);
+
+        }
+        else if (id == R.id.nav_logout) {
+
+            Toast.makeText(this,"Logging Out",Toast.LENGTH_LONG).show();
+            SharedPreferences pref = getSharedPreferences("UserSession", 0); // 0 - for private mode
+            SharedPreferences.Editor editor = pref.edit();
+            editor.clear();
+            editor.apply();
+            Intent goTOTut=new Intent(this, Login.class);
+            goTOTut.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+            goTOTut.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(goTOTut);
+            this.finish();
+
 
         }
 

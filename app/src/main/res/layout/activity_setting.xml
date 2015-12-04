@@ -1,0 +1,47 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+
+    tools:context="com.neoecosystem.samplex.SwitchActivity">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:id="@+id/accurate"
+        android:text="Use Accurate Locations"
+        android:layout_marginTop="15sp"
+        android:textColor="@color/colorSkyBlue"
+        android:paddingLeft="15sp"
+        android:layout_marginBottom="15sp"
+        android:layout_height="wrap_content" />
+
+    <Switch
+        android:id="@+id/myswitch"
+        android:layout_alignParentRight="true"
+        android:layout_height="45sp"
+        android:paddingRight="20sp"
+        android:shadowColor="@color/colorSkyBlue"
+        android:layout_width="200sp" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_below="@+id/accurate"
+        android:id="@+id/line"
+        android:layout_marginLeft="15sp"
+        android:layout_marginRight="15sp"
+        android:background="@color/colorPrimary"
+        android:layout_height="0.1dp">
+
+    </View>
+
+    <TextView
+        android:layout_width="wrap_content"
+       android:layout_below="@+id/line"
+        android:layout_marginTop="15sp"
+        android:textColor="@color/colorSkyBlue"
+        android:text="Update Profile"
+        android:onClick="updateMethod"
+        android:paddingLeft="15sp"
+        android:layout_height="25sp" />
+
+</RelativeLayout> 

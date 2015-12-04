@@ -29,7 +29,7 @@
     <RelativeLayout
         android:id="@+id/layout_user"
         android:layout_width="350sp"
-        android:layout_height="40dp"
+        android:layout_height="50dp"
         android:layout_below="@+id/txtComment"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="40dp"
@@ -55,7 +55,7 @@
 
 
             android:inputType="text"
-            android:text="User Name"
+            android:hint="User Name"
 
             android:textSize="20sp" >
             <requestFocus android:layout_width="wrap_content" />
@@ -66,7 +66,7 @@
     <RelativeLayout
         android:id="@+id/layout_pass"
         android:layout_width="350dp"
-        android:layout_height="40dp"
+        android:layout_height="50dp"
         android:layout_below="@+id/layout_user"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="20dp"
@@ -90,7 +90,7 @@
             android:layout_toRightOf="@+id/imgpass"
             android:ems="10"
             android:inputType="textEmailAddress"
-            android:text="Password"
+            android:hint="Password"
             android:textColor="@color/textcolor"
             android:textSize="20sp" >
 
@@ -140,10 +140,10 @@
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="Forgot my password?"
         android:textColor="@color/colorSkyBlue"
+        android:visibility="invisible"
         android:id="@+id/textView2"
-        android:onClick="forgotMethod"
         android:clickable="true"
-        android:layout_marginTop="15sp"
+        android:layout_marginTop="10sp"
         android:layout_below="@+id/layout_pass"
         android:layout_alignRight="@+id/txtComment"
         android:layout_alignEnd="@+id/txtComment" />
@@ -155,10 +155,11 @@
         android:text="Create a new account"
         android:id="@+id/textView3"
         android:onClick="createAccount"
+        android:focusableInTouchMode="true"
         android:clickable="true"
         android:textColor="@color/colorSkyBlue"
         android:layout_below="@+id/textView2"
-        android:layout_marginTop="10sp"
+
         android:layout_alignRight="@+id/textView2"
         android:layout_alignEnd="@+id/textView2" />
 

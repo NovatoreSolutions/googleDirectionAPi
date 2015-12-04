@@ -12,6 +12,7 @@ import android.view.Window;
 
 import com.google.android.gms.maps.model.LatLng;
 import com.google.gson.Gson;
+import com.novatoresols.staysafe.model.User;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -74,6 +75,26 @@ public class Spash extends AppCompatActivity {
             String jsonFavorites = gson.toJson(list);
             editor.putString("alist", jsonFavorites);
             editor.commit();
+
+
+            SharedPreferences pref = getSharedPreferences("UserRecords", Context.MODE_PRIVATE);
+            SharedPreferences.Editor edito = pref.edit();
+            List<User> aList=new ArrayList();
+            User u=new User();
+            u.setName("a");
+            u.setPassword("p");
+            u.setEmail("e");
+            User uu=new User();
+            uu.setName("aa");
+            uu.setPassword("pp");
+            uu.setEmail("ee");
+            aList.add(u);
+            aList.add(uu);
+            Gson gso = new Gson();
+            String jsonFavorite = gso.toJson(aList);
+            edito.putString("ulist", jsonFavorite);
+            edito.commit();
+
 
             /*//Reading The List
             SharedPreferences getList;
